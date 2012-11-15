@@ -1,12 +1,7 @@
-# Compiled Object files
-*.slo
-*.lo
+*Makefile
 *.o
-
-# Compiled Dynamic libraries
+*moc_*
 *.so
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+ui_*.h
+qrc*.cpp
+.dir-locals.el*
