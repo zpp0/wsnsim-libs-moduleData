@@ -72,7 +72,6 @@ struct ModuleDescriptionRaw
     QString author;
     QString type;
     QString fileName;
-    // QString lang;
     QString version;
     QString shortDescription;
     QString description;
