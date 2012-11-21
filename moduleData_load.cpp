@@ -58,6 +58,9 @@ ModuleDescriptionRaw ModuleData::load(QString& fileName, QString* errorMessage)
         if (dn_node.nodeName() == "name")
             moduleParams.name = dn_node.toElement().text();
 
+        if (dn_node.nodeName() == "UUID")
+            moduleParams.UUID = dn_node.toElement().text();
+
         if (dn_node.nodeName() == "type")
             moduleParams.type = dn_node.toElement().text();
 
