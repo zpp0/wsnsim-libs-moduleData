@@ -1,7 +1,7 @@
 /**
  *
  * File: moduleData.cpp
- * Description: methods of loading module data from XML
+ * Description: methods of loading module data from Lua
  * Author: Yarygin Alexander <yarygin.alexander@gmail.com>
  *
  **/
