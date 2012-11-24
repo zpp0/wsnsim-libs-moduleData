@@ -13,7 +13,7 @@
 #include <QString>
 #include <QMap>
 
-struct ModuleEventArgumentRaw
+struct ModuleEventParamRaw
 {
     QString name;
     QString info;
@@ -33,7 +33,7 @@ struct ModuleFunctionRaw
     QString name;
     QString info;
     QList<ModuleFunctionArgumentRaw> arguments;
-    QString result;
+    QString resultType;
 };
 
 struct ModuleParamRaw
@@ -49,7 +49,7 @@ struct ModuleEventRaw
 {
     QString name;
     QString info;
-    QList<ModuleEventArgumentRaw> arguments;
+    QList<ModuleEventParamRaw> params;
 };
 
 struct ModuleInterfaceRaw
@@ -67,13 +67,10 @@ struct ModuleDependRaw
 
 struct ModuleDescriptionRaw
 {
-    QString UUID;
     QString name;
     QString author;
     QString type;
     QString fileName;
-    QString version;
-    QString shortDescription;
     QString description;
     QList<ModuleParamRaw> params;
     ModuleInterfaceRaw interface;

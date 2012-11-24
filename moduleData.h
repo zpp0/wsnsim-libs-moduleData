@@ -10,10 +10,12 @@
 
 #include <QtCore>
 
-#include <QtXml>
-#include <QDomElement>
-#include <QDomDocument>
-#include <QDomText>
+extern "C"
+{
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
+}
 
 #include "moduleParams.h"
 
@@ -25,22 +27,25 @@ public:
     ModuleData();
 
     ModuleDescriptionRaw load(QString& fileName, QString* errorMessage);
-    void save(QString& fileName, QString* errorMessage, ModuleDescriptionRaw& params);
 
 private:
+    void open();
+    void close();
+    int loadFile(QString path);
 
-    QList<ModuleParamRaw> loadModuleParams(QDomNode dn_node);
-    ModuleInterfaceRaw loadModuleInterface(QDomNode dn_node);
-    QList<ModuleDependRaw> loadModuleDependencies(QDomNode dn_node);
-    QList<ModuleFunctionRaw> loadModuleFunctions(QDomNode dn_node);
-    QList<ModuleEventRaw> loadModuleEvents(QDomNode dn_node);
+    static int declareModule(lua_State* lua);
 
-    QMap<QString, QString> loadInfo(QDomNode dn_node);
+    static QString getField(lua_State* lua, QString name);
 
-    void saveModuleInfo(QDomDocument* result, QDomElement* parent, ModuleDescriptionRaw info);
+    static QList<ModuleParamRaw> getParams(lua_State* lua);
+    static ModuleInterfaceRaw getInterface(lua_State* lua);
+    static QList<ModuleDependRaw> getDependencies(lua_State* lua);
 
-    void createXml(QDomDocument* result, QDomElement* parent, QString XNodeName, QString XNodeValue);
-    void createXml(QDomDocument* result, QDomElement* parent, QString XNodeName, QString XNodeValue, QMap<QString, QString> attrs);
+    static ModuleDescriptionRaw* m_module;
+
+    QString* m_errorString;
+
+    lua_State *m_lua;
 };
 
 #ifdef Q_WS_WIN
@@ -51,8 +56,5 @@ private:
 
 extern "C" MY_EXPORT ModuleDescriptionRaw load(QString& fileName,
                                                QString* errorMessage);
-extern "C" MY_EXPORT void save(QString& fileName,
-                               QString* errorMessage,
-                               ModuleDescriptionRaw& params);
 
 #endif // MODULEDATA_H
