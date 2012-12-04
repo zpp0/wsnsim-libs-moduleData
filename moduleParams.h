@@ -12,6 +12,7 @@
 #include <QList>
 #include <QString>
 #include <QMap>
+#include <QVariant>
 
 struct ModuleEventParamRaw
 {
@@ -42,6 +43,8 @@ struct ModuleParamRaw
     QString type;
     QString info;
     QString units;
+    QVariant defaultValue;
+    bool optional;
     QMap<QString, QString> arguments;
 };
 
@@ -62,6 +65,8 @@ struct ModuleDependRaw
 {
     QString name;
     QString type;
+    QString info;
+    bool optional;
     ModuleInterfaceRaw interface;
 };
 

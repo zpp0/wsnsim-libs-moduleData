@@ -72,6 +72,22 @@ QList<ModuleParamRaw> ModuleData::getParams(lua_State* lua)
         param.info = getField(lua, "info");
         param.units = getField(lua, "units");
 
+        lua_getfield(lua, -1, "optional");
+        if (lua_isboolean(lua, -1))
+            param.optional = lua_toboolean(lua, -1);
+        else
+            param.optional = false;
+        lua_pop(lua, 1);
+
+        lua_getfield(lua, -1, "default");
+        if (lua_isboolean(lua, -1))
+            param.defaultValue = lua_toboolean(lua, -1);
+        else if (lua_isstring(lua, -1))
+            param.defaultValue = lua_tostring(lua, -1);
+        else if (lua_isnumber(lua, -1))
+            param.defaultValue = lua_tonumber(lua, -1);
+        lua_pop(lua, 1);
+
         lua_getfield(lua, -1, "args");
 
         if (lua_istable(lua, -1)) {
@@ -222,6 +238,14 @@ QList<ModuleDependRaw> ModuleData::getDependencies(lua_State* lua)
 
         dependence.name = getField(lua, "name");
         dependence.type = getField(lua, "type");
+        dependence.info = getField(lua, "info");
+
+        lua_getfield(lua, -1, "optional");
+        if (lua_isboolean(lua, -1))
+            dependence.optional = lua_toboolean(lua, -1);
+        else
+            dependence.optional = false;
+        lua_pop(lua, 1);
 
         lua_getfield(lua, -1, "interface");
         if (lua_istable(lua, -1))
